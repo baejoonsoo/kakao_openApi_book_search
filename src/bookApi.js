@@ -1,12 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
+import { getApiKey } from './restApi';
 
 export const bookApi = (title) => {
+  const restApi = getApiKey();
   return axios
     .request({
-      method: "get",
+      method: 'get',
       url: `https://dapi.kakao.com/v3/search/book?target=title&query=${title}`,
       headers: {
-        Authorization: "KakaoAK c4e2ae4efc95f13b600335f2ef929eac",
+        Authorization: `KakaoAK ${restApi}`,
       },
     })
     .then((res) => {
