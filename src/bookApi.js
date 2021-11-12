@@ -12,11 +12,9 @@ export const bookApi = (title) => {
       },
     })
     .then((res) => {
-      console.log(res.data.documents);
       return res.data.documents;
     })
     .catch((err) => {
-      console.log(err);
       throw new Error(err);
     });
 };

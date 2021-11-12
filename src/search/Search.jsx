@@ -4,24 +4,41 @@ import Book from './Book';
 import * as S from './searchStyle';
 
 const Search = () => {
-  const [search, setSearch] = useState('');
+  const [searchData, setSearchData] = useState('');
   const [data, setData] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   const changeInput = (e) => {
-    setSearch(e.target.value);
+    setSearchData(e.target.value);
   };
 
-  // useEffect(() => {}, [search]);
-
-  const searchBook = () => {
-    if (search) {
-      bookApi(search)
+  /*
+  useEffect(() => {
+    if (searchData) {
+      bookApi(searchData)
         .then((res) => {
           setData(res);
         })
         .catch((err) => {
           alert('err!!');
         });
+    }
+  }, [searchData]);
+  */
+
+  const searchBook = () => {
+    if (searchData && !searching) {
+      setSearching(true);
+
+      bookApi(searchData)
+        .then((res) => {
+          setData(res);
+        })
+        .catch((err) => {
+          alert('err!!');
+        });
+
+      setSearching(false);
     }
   };
 
@@ -31,7 +48,9 @@ const Search = () => {
         <S.Header>
           <S.SearchBar>
             <input onChange={changeInput} placeholder="책 제목을 입력하세요." />
-            <button onClick={searchBook}>검색</button>
+            <button onClick={searchBook}>
+              {searching ? '검색 중..' : '검색'}
+            </button>
           </S.SearchBar>
         </S.Header>
       </S.Fixed>
